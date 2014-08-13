@@ -1,20 +1,26 @@
 package main
 
 import (
-    "fmt"
-    "net/http"
-    "os"
+    "io/ioutil"
+    "github.com/gin-gonic/gin"
 )
 
 func main() {
-    http.HandleFunc("/", hello)
-    fmt.Println("listening...")
-    err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
-    if err != nil {
-      panic(err)
-    }
+    r := gin.Default()
+    r.GET("/", hello)
+    r.GET("/ping", ping)
+
+    r.Run(":8080")
 }
 
-func hello(res http.ResponseWriter, req *http.Request) {
-    fmt.Fprintln(res, "hello, world ha")
+func hello(c *gin.Context) {
+    content, err := ioutil.ReadFile("main.html")
+    if err != nil {
+        //Do something
+    }
+    c.Data(200, "text/html", content)
+}
+
+func ping(c *gin.Context) {
+    c.String(200, "Pong")
 }
