@@ -7,6 +7,7 @@ import (
     "encoding/json"
     "strings"
     "fmt"
+    "os"
 )
 
 var global_img_cache = make(map[string][]map[string]interface{});
@@ -17,7 +18,8 @@ func main() {
     r.GET("/ping", ping)
     r.GET("/links/:title", links)
 
-    r.Run(":8080")
+    var port := os.Getenv("PORT")
+    r.Run(":"+port)
 }
 
 func root(c *gin.Context) {
