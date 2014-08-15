@@ -18,7 +18,7 @@ func main() {
     r.GET("/ping", ping)
     r.GET("/links/:title", links)
 
-    var port := os.Getenv("PORT")
+    var port = os.Getenv("PORT")
     r.Run(":"+port)
 }
 
