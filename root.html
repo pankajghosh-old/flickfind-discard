@@ -1,0 +1,82 @@
+	<html>
+	<head>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script>
+	function getlinks(param) {
+		var url = "/links/"+param
+		console.log(url)
+		$.getJSON( url, function( data ) {
+			var h = "";
+
+			data.forEach(function(entry) {
+
+			var poster = entry["urlPoster"];
+			var link = entry["urlIMDB"];
+
+			h += "<a href='"+link+"'><img src='"+poster+"'></a>"
+			});
+
+			$("#d1").html(h);
+		});
+	}
+
+	// function getSearchTerms() {
+	// 	$.getJSON( "/terms", function( data ) {
+	// 		var h = "";
+
+	// 		data.forEach(function(entry) {
+
+	// 		var term = entry["term"];
+	// 		// console.log('Adding term:'+term);
+
+	// 		h += "<a class='btn btn-default'>"+term+"</a>";
+	// 		});
+
+	// 		$("#selection_buttons").html(h);
+	// 	});
+	// }
+
+	// function addSearchTermButtonClicked(){
+	// 	var searchterm = $('#addsearchtermtextbox').val();
+	// 	console.log('search term '+searchterm);
+	// 	var url = "/addsearchterm"+"?term="+searchterm
+	// 	console.log(url)
+	// 	$.post(url, function(){
+	// 		getSearchTerms();
+	// 	});				
+	// }http://localhost:8080/links
+
+	// function searchByTerm(e){
+	// 	var param = $(e.target).text();
+	// 	$('#selection_buttons').find('.btn-success').removeClass("btn-success");
+	// 	$(e.target).addClass("btn btn-success");
+
+	// 	h = "loading..."
+	// 	$("#d1").html(h);
+
+	// 	getlinks(param);		
+	// }
+
+	function documentIsReady(){
+		getlinks("shawshank");
+		// getSearchTerms();	
+
+		// $('#addsearchtermbutton').click(addSearchTermButtonClicked);
+
+		// $('body').on("click", ".btn", searchByTerm);
+	}
+
+	$( document ).ready(documentIsReady);
+
+	</script>
+	</head>
+	<body>
+	<div id="selection_buttons">Getting search terms...</div>
+	<div style="padding:16px;">
+		Add a search term : <input id="addsearchtermtextbox" type="textbox" value=""></input>
+		<button id="addsearchtermbutton">Click Me</button>
+	</div>
+	<div id="d1">loading...</div>
+	</body>
+	</html>
