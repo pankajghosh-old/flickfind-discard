@@ -46,3 +46,16 @@ func GetAllSearchTerms() (terms []SearchTerm) {
 	}
 	return terms
 }
+
+func AddSearchTerm(new_term string) {
+	sql := fmt.Sprintf("INSERT INTO SearchTerms (term) SELECT '%s'"+
+		"WHERE NOT EXISTS ( SELECT id FROM SearchTerms WHERE term = '%s');", new_term, new_term)
+
+	fmt.Println("executing sql", sql)
+
+	_, err := db.Exec(sql)
+	if err != nil {
+		panic(err)
+	}
+
+}

@@ -31,7 +31,7 @@ func main() {
 	r.GET("/ping", ping)
 	r.GET("/links/:title", links)
 	r.GET("/terms", terms)
-	r.POST("/addsearchterm/*term", addsearchterm)
+	r.POST("/addsearchterm/:term", addsearchterm)
 
 	var port = os.Getenv("PORT")
 	r.Run(":" + port)
@@ -43,8 +43,10 @@ func root(c *gin.Context) {
 
 func addsearchterm(c *gin.Context) {
 	new_term := c.Params.ByName("term")
+	new_term = strings.TrimSpace(new_term)
 	if new_term != "" {
 		fmt.Println("processing new term", new_term)
+		AddSearchTerm(new_term)
 	} else {
 		fmt.Println("skipping it since string is nil")
 	}
