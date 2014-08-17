@@ -21,50 +21,52 @@
 		});
 	}
 
-	// function getSearchTerms() {
-	// 	$.getJSON( "/terms", function( data ) {
-	// 		var h = "";
+	function getSearchTerms() {
+		$.getJSON( "/terms", function( data ) {
+			var h = "";
 
-	// 		data.forEach(function(entry) {
+			data.forEach(function(entry) {
 
-	// 		var term = entry["term"];
-	// 		// console.log('Adding term:'+term);
+			var term = entry["term"];
+			// console.log('Adding term:'+term);
 
-	// 		h += "<a class='btn btn-default'>"+term+"</a>";
-	// 		});
+			h += "<a class='btn btn-default'>"+term+"</a>";
+			});
 
-	// 		$("#selection_buttons").html(h);
-	// 	});
-	// }
+			$("#selection_buttons").html(h);
+		});
+	}
 
-	// function addSearchTermButtonClicked(){
-	// 	var searchterm = $('#addsearchtermtextbox').val();
-	// 	console.log('search term '+searchterm);
-	// 	var url = "/addsearchterm"+"?term="+searchterm
-	// 	console.log(url)
-	// 	$.post(url, function(){
-	// 		getSearchTerms();
-	// 	});				
-	// }http://localhost:8080/links
+	function addSearchTermButtonClicked(){
+		var searchterm = $('#addsearchtermtextbox').val();
+		// console.log('search term '+searchterm);
+		if (searchterm){
+			var url = "/addsearchterm/"+searchterm
+			// console.log(url)
+			$.post(url, function(){
+				getSearchTerms();
+			});				
+		}
+	}
 
-	// function searchByTerm(e){
-	// 	var param = $(e.target).text();
-	// 	$('#selection_buttons').find('.btn-success').removeClass("btn-success");
-	// 	$(e.target).addClass("btn btn-success");
+	function searchByTerm(e){
+		var param = $(e.target).text();
+		$('#selection_buttons').find('.btn-success').removeClass("btn-success");
+		$(e.target).addClass("btn btn-success");
 
-	// 	h = "loading..."
-	// 	$("#d1").html(h);
+		h = "loading..."
+		$("#d1").html(h);
 
-	// 	getlinks(param);		
-	// }
+		getlinks(param);		
+	}
 
 	function documentIsReady(){
 		getlinks("shawshank");
-		// getSearchTerms();	
+		getSearchTerms();	
 
-		// $('#addsearchtermbutton').click(addSearchTermButtonClicked);
+		$('#addsearchtermbutton').click(addSearchTermButtonClicked);
 
-		// $('body').on("click", ".btn", searchByTerm);
+		$('body').on("click", ".btn", searchByTerm);
 	}
 
 	$( document ).ready(documentIsReady);
